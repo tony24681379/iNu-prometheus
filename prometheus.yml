@@ -125,9 +125,8 @@ spec:
         component: core
     spec:
       containers:
-      - name: prometheus
+      - name: prometheus-node-exporter
         image: prom/prometheus:v1.3.1
-        name: prometheus-node-exporter
         imagePullPolicy: IfNotPresent
         args:
           - '-storage.local.retention=720h'
@@ -169,6 +168,7 @@ spec:
       containers:
       - name: kube-state-metrics
         image: gcr.io/google_containers/kube-state-metrics:v0.3.0
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
 ---
