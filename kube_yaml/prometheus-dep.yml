@@ -124,6 +124,8 @@ spec:
         app: prometheus
         component: core
     spec:
+      nodeSelector:
+        kubeadm.alpha.kubernetes.io/role: "master"
       containers:
       - name: prometheus-node-exporter
         image: prom/prometheus:v1.3.1
