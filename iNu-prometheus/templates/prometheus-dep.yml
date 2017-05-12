@@ -1,0 +1,43 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prometheus-core
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "labels.core" . | indent 4 }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: prometheus-main
+      labels:
+{{ include "labels.core" . | indent 8 }}
+    spec:
+      nodeSelector:
+{{ include "nodeSelector" . | indent 8 }}
+      containers:
+      - name: prometheus-node
+        image: {{ .Values.images.prometheusCore.repository }}:{{ .Values.images.prometheusCore.tag }}
+        imagePullPolicy: IfNotPresent
+        args:
+          - '-storage.local.retention={{ .Values.images.prometheusCore.recordTime}}'
+          - '-config.file=/etc/prometheus/prometheus.yml'
+          - '-storage.local.path=/prometheus'
+        ports:
+        - name: webui
+          containerPort: 9090
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus
+        - name: data
+          mountPath: /prometheus
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ printf "prometheus-core-%s" .Release.Name | trunc 63 }}
+      - name: data
+        hostPath:
+          path: {{ .Values.images.prometheusCore.dataPath }}

@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  name: {{ printf "prometheus-node-exporter-%s" .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "labels.exporter" . | indent 4 }}
+spec:
+  clusterIP: None
+  type: ClusterIP
+  ports:
+    - name: prometheus-node-exporter
+      port: 9100
+      protocol: TCP
+  selector:
+{{ include "labels.exporter" . | indent 4 }}

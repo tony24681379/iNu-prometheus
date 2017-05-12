@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ printf "kube-state-metrics-%s" .Release.Name | trunc 63 }}
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "labels.kubeStateMetrics" . | indent 4 }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+{{ include "labels.kubeStateMetrics" . | indent 8 }}
+    spec:
+      containers:
+      - name: kube-state-metrics
+        image: {{ .Values.images.kubeStateMetrics.repository }}:{{ .Values.images.kubeStateMetrics.tag }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

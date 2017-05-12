@@ -1,0 +1,25 @@
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: prometheus-node-exporter
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "labels.exporter" . | indent 4 }}
+spec:
+  template:
+    metadata:
+      name: prometheus-node-exporter
+      labels:
+{{ include "labels.exporter" . | indent 8 }}
+    spec:
+      containers:
+      - name: prometheus-node-exporter
+        image: {{ .Values.images.prometheusNodeExporter.repository }}:{{ .Values.images.prometheusNodeExporter.tag }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: node-exportor
+          containerPort: 9100
+          hostPort: 9100
+      hostNetwork: true
+      hostPID: true
