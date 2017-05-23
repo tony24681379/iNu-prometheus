@@ -24,6 +24,13 @@ data:
             regex: '(.*):10250'
             replacement: '${1}:10255'
             target_label: __address__
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            action: drop
+            regex: go_(.*)
+          - source_labels: [__name__]
+            action: drop
+            regex: etcd_(.*)
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L79
       - job_name: 'kubernetes-endpoints'
@@ -54,6 +61,10 @@ data:
           - source_labels: [__meta_kubernetes_service_name]
             action: replace
             target_label: kubernetes_name
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            action: drop
+            regex: go_(.*)
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L119
       - job_name: 'kubernetes-services'
@@ -78,6 +89,10 @@ data:
             target_label: kubernetes_namespace
           - source_labels: [__meta_kubernetes_service_name]
             target_label: kubernetes_name
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            action: drop
+            regex: go_(.*)
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L156
       - job_name: 'kubernetes-pods'
@@ -104,3 +119,9 @@ data:
           - source_labels: [__meta_kubernetes_pod_name]
             action: replace
             target_label: kubernetes_pod_name
+        metric_relabel_configs:
+          - source_labels: [__name__]
+            action: drop
+            regex: go_(.*)
+    rule_files:
+    - '/etc/prometheus-rules/alert.rules'
