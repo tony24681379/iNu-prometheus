@@ -5,13 +5,13 @@ metadata:
   name: prometheus-node-exporter
   namespace: {{ .Values.namespace }}
   labels:
-{{ include "labels.exporter" . | indent 4 }}
+{{ include "labels.nodeExporter" . | indent 4 }}
 spec:
   template:
     metadata:
       name: prometheus-node-exporter
       labels:
-{{ include "labels.exporter" . | indent 8 }}
+{{ include "labels.nodeExporter" . | indent 8 }}
     spec:
       containers:
       - name: prometheus-node-exporter

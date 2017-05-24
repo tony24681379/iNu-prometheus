@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/probe: "true"
+  namespace: {{ .Values.namespace }}
+  name: blackbox
+  labels:
+{{ include "labels.blackboxExporter" . | indent 4 }}
+spec:
+  ports:
+  - name: blackbox-exporter
+    port: 80
+    targetPort: http
+  selector:
+{{ include "labels.blackboxExporter" . | indent 4 }}

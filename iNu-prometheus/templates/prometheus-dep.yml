@@ -15,7 +15,7 @@ spec:
 {{ include "labels.core" . | indent 8 }}
     spec:
       nodeSelector:
-{{ include "nodeSelector" . | indent 8 }}
+{{ .Values.images.prometheusCore.nodeSelector | indent 8 }}
       containers:
       - name: prometheus-node
         image: {{ .Values.images.prometheusCore.repository }}:{{ .Values.images.prometheusCore.tag }}

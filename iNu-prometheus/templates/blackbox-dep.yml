@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blackbox-exporter-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+{{ include "labels.blackboxExporter" . | indent 4 }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+{{ include "labels.blackboxExporter" . | indent 8 }}
+    spec:
+      containers:
+      - name: blackbox-exporter
+        image: {{ .Values.images.prometheusBlackboxExporter.repository }}:{{ .Values.images.prometheusBlackboxExporter.tag }}
+        ports:
+        - name: http
+          containerPort: 9115

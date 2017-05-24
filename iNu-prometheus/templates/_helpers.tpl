@@ -15,18 +15,19 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "nodeSelector" -}}
-kubeadm.alpha.kubernetes.io/role: "master"
-{{- end -}}
-
 {{- define "labels.core" -}}
 app: prometheus
-component: node-core
+component: prometheus-core
 {{- end -}}
 
-{{- define "labels.exporter" -}}
+{{- define "labels.nodeExporter" -}}
 app: prometheus
-component: node-exporter
+component: prometheus-node-exporter
+{{- end -}}
+
+{{- define "labels.blackboxExporter" -}}
+app: prometheus
+component: prometheus-blackbox-exporter
 {{- end -}}
 
 {{- define "labels.kubeStateMetrics" -}}
