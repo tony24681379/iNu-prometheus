@@ -3,8 +3,9 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
+    prometheus.io/probe: "true"
     prometheus.io/scrape: 'true'
-  name: {{ printf "prometheus-node-exporter-%s" .Release.Name }}
+  name: prometheus-node-exporter
   namespace: {{ .Values.namespace }}
   labels:
 {{ include "labels.nodeExporter" . | indent 4 }}

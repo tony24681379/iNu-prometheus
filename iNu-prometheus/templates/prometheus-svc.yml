@@ -7,6 +7,7 @@ metadata:
   labels:
 {{ include "labels.core" . | indent 4 }}
   annotations:
+    prometheus.io/probe: "true"
     prometheus.io/scrape: 'true'
 spec:
   type: NodePort
