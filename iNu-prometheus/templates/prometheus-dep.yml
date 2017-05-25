@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: prometheus-core
+  name: {{ printf "prometheus-core-%s" .Release.Name | trunc 63 }}
   namespace: {{ .Values.namespace }}
   labels:
 {{ include "labels.core" . | indent 4 }}
@@ -11,6 +11,8 @@ spec:
   template:
     metadata:
       name: prometheus-main
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/prometheus-configMap.yml") . | sha256sum }}
       labels:
 {{ include "labels.core" . | indent 8 }}
     spec:

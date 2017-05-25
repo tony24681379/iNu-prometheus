@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blackbox-exporter-deployment
+  name: {{ printf "blackbox-exporter-%s" .Release.Name | trunc 63 }}
   namespace: {{ .Values.namespace }}
   labels:
 {{ include "labels.blackboxExporter" . | indent 4 }}
