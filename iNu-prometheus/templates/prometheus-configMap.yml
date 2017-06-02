@@ -128,10 +128,10 @@ data:
 
   alert.rules: |-
     ALERT PROBE_FAILED
-      IF probe_success = 0
+      IF probe_success == 0
       FOR 30s
-      LABELS { job="kubernetes-services" }
+      LABELS { kubernetes="probe" }
       ANNOTATIONS {
         summary = "Instance {{"{{"}} $labels.kubernetes_name {{"}}"}} probe failed",
-        description = "svc:{{"{{"}} $labels.kubernetes_name {{"}}"}}",
+        description = "svc:{{"{{"}} $labels.kubernetes_name {{"}}"}}, namespace:{{"{{"}} $labels.kubernetes_namespace {{"}}"}}",
       }
