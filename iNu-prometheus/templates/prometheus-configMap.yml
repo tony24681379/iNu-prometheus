@@ -124,4 +124,14 @@ data:
             action: drop
             regex: go_(.*)
     rule_files:
-    - '/etc/prometheus-rules/alert.rules'
+      - '/etc/prometheus/alert.rules'
+
+  alert.rules: |-
+    ALERT PROBE_FAILED
+      IF probe_success = 0
+      FOR 30s
+      LABELS { job="kubernetes-services" }
+      ANNOTATIONS {
+        summary = "Instance {{"{{"}} $labels.kubernetes_name {{"}}"}} probe failed",
+        description = "svc:{{"{{"}} $labels.kubernetes_name {{"}}"}}",
+      }
