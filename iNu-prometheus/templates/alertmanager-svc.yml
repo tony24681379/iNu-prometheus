@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager
+  namespace: {{ .Values.namespace }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/alertmanager/metrics'
+  labels:
+{{ include "labels.alertmanager" . | indent 4 }}
+spec:
+  ports:
+  - name: alertmanager
+    protocol: TCP
+    port: 9093
+    targetPort: 9093
+  selector:
+{{ include "labels.alertmanager" . | indent 4 }}

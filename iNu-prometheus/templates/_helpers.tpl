@@ -34,3 +34,8 @@ component: prometheus-blackbox-exporter
 app: prometheus
 component: kube-state-metrics
 {{- end -}}
+
+{{- define "labels.alertmanager" -}}
+app: prometheus
+component: alertmanager
+{{- end -}}
