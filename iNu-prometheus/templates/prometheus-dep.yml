@@ -26,6 +26,7 @@ spec:
           - '-storage.local.retention={{ .Values.images.prometheusCore.recordTime}}'
           - '-config.file=/etc/prometheus/prometheus.yml'
           - '-storage.local.path=/prometheus'
+          - '-alertmanager.url=http://alertmanager:9093'
         ports:
         - name: webui
           containerPort: 9090
