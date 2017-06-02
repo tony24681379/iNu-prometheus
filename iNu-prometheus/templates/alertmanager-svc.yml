@@ -5,8 +5,7 @@ metadata:
   name: alertmanager
   namespace: {{ .Values.namespace }}
   annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/path: '/alertmanager/metrics'
+    prometheus.io/probe: "true"
   labels:
 {{ include "labels.alertmanager" . | indent 4 }}
 spec:
