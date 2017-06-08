@@ -5,7 +5,7 @@ metadata:
   annotations:
     prometheus.io/probe: "true"
     prometheus.io/scrape: 'true'
-  name: prometheus-node-exporter
+  name: {{ .Values.service.prometheusNodeExporter.name }}
   namespace: {{ .Values.namespace }}
   labels:
 {{ include "labels.nodeExporter" . | indent 4 }}

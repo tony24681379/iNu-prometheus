@@ -5,7 +5,7 @@ metadata:
   annotations:
     prometheus.io/probe: "true"
   namespace: {{ .Values.namespace }}
-  name: blackbox
+  name: {{ .Values.service.prometheusBlackboxExporter.name }}
   labels:
 {{ include "labels.blackboxExporter" . | indent 4 }}
 spec:
