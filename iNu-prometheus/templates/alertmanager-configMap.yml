@@ -15,19 +15,22 @@ data:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 5m
-      receiver: slack_alert
 
       routes:
       - match:
-          pager: webhook
+          severity: ^([a-bA-Z]*)$
         receiver: webhook_k8s
+        continue: true
+      - match:
+          severity: ^([a-bA-Z]*)$
+        receiver: slack_alert
+        continue: true
 
     receivers:
     - name: 'slack_alert'
       slack_configs:
       - channel: {{ .Values.slackChannel }}
         send_resolved: true
-
     - name: 'webhook_k8s'
       webhook_configs:
       - url: {{ .Values.web_hook }}
