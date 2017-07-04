@@ -17,9 +17,19 @@ data:
       repeat_interval: 5m
       receiver: slack_alert
 
+      routes:
+      - match:
+          pager: webhook
+        receiver: webhook-k8s
+
     receivers:
     - name: 'slack_alert'
       slack_configs:
-      - channel: '#alert'
+      - channel: {{ .Values.slackChannel }}
+        send_resolved: true
+
+    - name: 'webhook_k8s'
+      webhook_configs:
+      - url: {{ .Values.web_hook }}
         send_resolved: true
 

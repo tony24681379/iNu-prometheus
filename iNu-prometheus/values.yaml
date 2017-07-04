@@ -40,3 +40,5 @@ resources:
     cpu: 500m
     memory: 512M
 slackApiUrl: https://slack.com/api/
+slackChannel: '#alert'
+web_hook: http://k8s-alert-controller.default.svc/pod/restart
