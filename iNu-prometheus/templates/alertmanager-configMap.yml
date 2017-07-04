@@ -20,7 +20,7 @@ data:
       routes:
       - match:
           pager: webhook
-        receiver: webhook-k8s
+        receiver: webhook_k8s
 
     receivers:
     - name: 'slack_alert'
