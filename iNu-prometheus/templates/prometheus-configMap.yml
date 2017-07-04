@@ -124,14 +124,6 @@ data:
             action: drop
             regex: go_(.*)
     rule_files:
-      - '/etc/prometheus/alert.rules'
+      - '/etc/prometheus/*.rules'
 
-  alert.rules: |-
-    ALERT PROBE_FAILED
-      IF probe_success == 0
-      FOR 30s
-      LABELS { kubernetes="probe" }
-      ANNOTATIONS {
-        summary = "Instance {{"{{"}} $labels.kubernetes_name {{"}}"}} probe failed",
-        description = "svc:{{"{{"}} $labels.kubernetes_name {{"}}"}}, namespace:{{"{{"}} $labels.kubernetes_namespace {{"}}"}}",
-      }
+{{ (.Files.Glob "alert/*").AsConfig | indent 2 }}

@@ -1,0 +1,8 @@
+ALERT PROBE_FAILED
+  IF probe_success == 0
+  FOR 30s
+  LABELS { kubernetes="probe" }
+  ANNOTATIONS {
+    summary = "Service {{ $labels.kubernetes_name }} probe failed",
+    description = "svc:{{ $labels.kubernetes_name }}, namespace:{{ $labels.kubernetes_namespace }}",
+  }
