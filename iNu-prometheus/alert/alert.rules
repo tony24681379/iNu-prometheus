@@ -13,5 +13,5 @@ ALERT POD_RESTART
   LABELS { kubernetes="restart", severity = "warning", receiver = "slack_alert" }
   ANNOTATIONS {
     summary = "Pod {{ $labels.pod }} restarted too much times",
-    description = "{\"pod\":\"{{ $labels.pod }}\", \"namespace\":\"{{ $labels.kubernetes_namespace }}\"}",
+    description = "{\"pod\":\"{{ $labels.pod }}\", \"namespace\":\"{{ $labels.namespace }}\"}",
   }
