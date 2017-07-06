@@ -15,14 +15,11 @@ data:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 5m
+      receiver: webhook_k8s
 
       routes:
       - match:
-          severity: ^([a-bA-Z]*)$
-        receiver: webhook_k8s
-        continue: true
-      - match:
-          severity: ^([a-bA-Z]*)$
+          receiver: "slack_alert"
         receiver: slack_alert
         continue: true
 

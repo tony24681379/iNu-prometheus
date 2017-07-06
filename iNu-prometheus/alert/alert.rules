@@ -1,8 +1,17 @@
 ALERT PROBE_FAILED
   IF probe_success == 0
   FOR 30s
-  LABELS { kubernetes="probe" }
+  LABELS { kubernetes="probe", severity = "critical" receiver = "slack_alert" }
   ANNOTATIONS {
     summary = "Service {{ $labels.kubernetes_name }} probe failed",
-    description = "svc:{{ $labels.kubernetes_name }}, namespace:{{ $labels.kubernetes_namespace }}",
+    description = "{\"service\":\"{{ $labels.kubernetes_name }}\", \"namespace\":\"{{ $labels.kubernetes_namespace }}\"}",
+  }
+
+ALERT POD_RESTART
+  IF kube_pod_container_status_restarts > 5
+  FOR 1m
+  LABELS { kubernetes="restart", severity = "warning" receiver = "slack_alert" }
+  ANNOTATIONS {
+    summary = "Pod {{ $labels.pod }} restarted too much times",
+    description = "{\"pod\":\"{{ $labels.pod }}\", \"namespace\":\"{{ $labels.kubernetes_namespace }}\"}",
   }
