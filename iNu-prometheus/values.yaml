@@ -41,4 +41,4 @@ resources:
     memory: 512M
 slackApiUrl: https://slack.com/api/
 slackChannel: '#alert'
-web_hook: http://k8s-alert-controller.default.svc/pod/restart
+web_hook: http://k8s-alert-controller.kube-system.svc/webhook
