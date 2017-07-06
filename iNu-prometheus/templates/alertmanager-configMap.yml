@@ -18,6 +18,10 @@ data:
       receiver: webhook_k8s
 
       routes:
+      - match_re:
+          severity: critical|warning
+        receiver: webhook_k8s
+        continue: true
       - match:
           receiver: "slack_alert"
         receiver: slack_alert
