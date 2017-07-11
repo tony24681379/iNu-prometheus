@@ -58,7 +58,7 @@ data:
           - source_labels: [__meta_kubernetes_service_name]
             action: replace
             target_label: kubernetes_name
-          - source_labels: [__meta_kubernetes_pod_ip]
+          - source_labels: [__meta_kubernetes_pod_host_ip]
             target_label: instance
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L119
