@@ -27,6 +27,7 @@ spec:
           - '-config.file=/etc/prometheus/prometheus.yml'
           - '-storage.local.path=/prometheus'
           - '-alertmanager.url=http://alertmanager:9093'
+          - '-storage.local.series-file-shrink-ratio=0.3'
         ports:
         - name: webui
           containerPort: 9090
