@@ -67,10 +67,10 @@ cluster_namespace_controller_pod_container:memory_cache:bytes =
     )
   )
 
-cluster_namespace_controller_pod_container:disk_usage:bytes =
+cluster_namespace_controller_pod_container:fs_usage:bytes =
   sum by (cluster,namespace,controller,pod_name,container_name) (
     label_replace(
-      container_disk_usage_bytes{container_name!=""},
+      container_fs_usage_bytes{container_name!=""},
       "controller", "$1",
       "pod_name", "^(.*)-[a-z0-9]+"
     )
