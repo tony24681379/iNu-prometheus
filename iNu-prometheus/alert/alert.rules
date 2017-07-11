@@ -27,7 +27,7 @@ ALERT NODE_LOW_DISK_SPACE
 
 ALERT NODE_DOWN
   IF up{ job="kubernetes-nodes" } == 0
-  FOR 1h
+  FOR 5m
   LABELS { severity = "critical", receiver = "slack_alert" }
   ANNOTATIONS {
     summary = "Node {{ $labels.instance }} is out of service",
