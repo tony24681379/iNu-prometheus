@@ -32,6 +32,14 @@ spec:
         #   mountPath: /etc/alertmanager-templates
         - name: alertmanager
           mountPath: /alertmanager
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9093
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9093
       volumes:
       - name: config-volume
         configMap:

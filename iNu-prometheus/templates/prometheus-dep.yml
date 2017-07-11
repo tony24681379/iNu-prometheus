@@ -38,6 +38,14 @@ spec:
           mountPath: /etc/prometheus
         - name: data
           mountPath: /prometheus
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9090
       volumes:
       - name: config-volume
         configMap:
