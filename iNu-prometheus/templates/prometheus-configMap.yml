@@ -49,7 +49,7 @@ data:
             action: replace
             target_label: __address__
             regex: (.+)(?::\d+);(\d+)
-            replacement: $1
+            replacement: ${1}:${2}
           - action: labelmap
             regex: __meta_kubernetes_service_label_(.+)
           - source_labels: [__meta_kubernetes_namespace]
@@ -58,6 +58,8 @@ data:
           - source_labels: [__meta_kubernetes_service_name]
             action: replace
             target_label: kubernetes_name
+          - source_labels: [__meta_kubernetes_pod_ip]
+            target_label: instance
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L119
       - job_name: 'kubernetes-services'
