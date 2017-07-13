@@ -8,7 +8,7 @@ ALERT PROBE_FAILED
   }
 
 ALERT POD_RESTART
-  IF kube_pod_container_status_restarts > 5
+  IF kube_pod_container_status_restarts > 4
   FOR 1m
   LABELS { severity = "warning", receiver = "slack_alert" }
   ANNOTATIONS {
@@ -18,7 +18,16 @@ ALERT POD_RESTART
 
 ALERT NODE_LOW_DISK_SPACE
   IF container_fs_usage_bytes{id="/",device=~"/dev/.*"} / container_fs_limit_bytes{id="/",device=~"/dev/.*"} * 100 > 90
-  FOR 1h
+  FOR 10m
+  LABELS { severity = "critical", receiver = "slack_alert" }
+  ANNOTATIONS {
+    summary = "Node {{ $labels.instance }} disk will out of space",
+    description = "{\"instance\":\"{{ $labels.instance }}\"}",
+  }
+
+ALERT NODE_LOW_MEMORY
+  IF container_memory_working_set_bytes{id="/"} / machine_memory_bytes{id="/"} * 100 > 90
+  FOR 5m
   LABELS { severity = "critical", receiver = "slack_alert" }
   ANNOTATIONS {
     summary = "Node {{ $labels.instance }} disk will out of space",
