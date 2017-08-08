@@ -8,7 +8,7 @@ ALERT PROBE_FAILED
   }
 
 ALERT POD_RESTART
-  IF kube_pod_container_status_restarts > 4
+  IF sum(kube_pod_container_status_restarts{pod!~"kube-apiserver.*",pod!~"kube-scheduler.*", pod!~"kube-controller-manager.*"}) by (pod,namespace) > 4
   FOR 1m
   LABELS { severity = "warning", receiver = "slack_alert" }
   ANNOTATIONS {
