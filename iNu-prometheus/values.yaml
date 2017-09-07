@@ -11,7 +11,7 @@ images:
     recordTime: 2400h
     recordInterval: 10s
     dataPath: /var/lib/prometheus/data
-    nodeSelector: "kubeadm.alpha.kubernetes.io/role: \"master\""
+    nodeSelector: "node-role.kubernetes.io/master:"
   prometheusNodeExporter:
     repository: prom/node-exporter
     tag: v0.14.0
